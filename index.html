@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            padding: 10px;
+            /*font-weight: bold;*/
+            font-size: 14pt;
+        }
+
+        #tip {
+            margin: 20px;
+            background: #5890AD;
+            /*padding: 20px;*/
+        }
+
+        .module {
+            color: white;
+            border: 1px solid #2a6496;
+            background: #2a6496;
+            margin: 10px;
+        }
+
+        span, a {
+            background-color: white;
+            color: darkslategray;
+        }
+    </style>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <title>360度全景照片</title>
+</head>
+<body>
+<div id="tip" style="display: block">
+    <div class="module">请先阅读使用说明，阅读完之后点击下方按钮即可</div>
+    <div class="module">
+        <p>1.本程序由<span>石军</span>完成，属于虚拟现实课程作品。</p>
+        <p>2. 阅读完成后，点击下一步按钮，然后可看到360度视角的照片。<span>按住鼠标不放</span>， <span>上下 左右 滑动</span> 即可转换视角进行360度浏览。</p>
+        <p>
+            3. 点击左下角<span>全屏按钮</span>或者<span>F11</span>，就可全屏观看。
+        </p>
+        <p>4. 本程序总共有3张图片，按下键盘上的<span>回车键</span>，
+            即可浏览下一张照片（因图片较大，首次加载可能稍等 1到2秒）。</p>
+    </div>
+    <div class="module"><p>1.源代码：可按F12查看源代码，或者前往<a href="https://github.com/imsj/imsj.github.com">代码仓库</a>查看。</p>
+        <p>
+            2.本程序使用了 JavaScript 框架 aframe（A web framework for
+            building virtual reality experiences），关于 aframe 框架的详
+            情，可参见：<a href="https://aframe.io/docs/0.5.0/introduction/">aframe</a>
+        </p>
+        <p>
+            3.程序中用到的 360 度全景照片，均来源于 flickr 网站的
+            Equirectangular 兴趣小组。更多照片参见：<a href="https://www.flickr.com/groups/equirectangular/">Equirectangular
+            兴趣小组(需翻墙)</a>
+        </p></div>
+    <div style="text-align: center;" class="module">
+        <button style="color:black">下一步</button>
+        <p>如果想返回来看使用说明，按键盘的<span>Esc键</span></p>
+    </div>
+</div>
+<a-scene style="visibility: hidden">
+    <a-assets>
+        <img id="img1" src="img/1.jpg">
+        <img id="img2" src="img/2.jpg">
+        <img id="img3" src="img/3.jpg">
+    </a-assets>
+    <a-sky src="#img1" rotation="0 0 0"></a-sky>
+</a-scene>
+<script>
+    /*
+     石军-虚拟现实课程
+     */
+    var len = 3;
+    var scene = document.querySelector('a-scene');
+    var tip = document.querySelector('#tip');
+    var assets = document.querySelector('a-assets');
+    var sky = document.querySelector('a-sky');
+    var button = document.querySelector('button');
+
+    button.onclick = function () {
+      imgLoad(img1, function () {
+        tip.style.display = 'none';
+        scene.style.visibility = "visible";
+      });
+    };
+    document.onkeydown = function (e) {
+      if (e && e.keyCode === 13) {
+          /* keycode为13代表回车键 */
+        src = sky.getAttribute('src');
+        var num = parseInt(src[src.length - 1]);
+        num = (num >= len) ? 1 : num + 1;
+        sky.setAttribute('src', "#img" + num);
+      }
+      if (e && e.keyCode === 27) {
+        tip.style.display = 'block';
+        scene.style.visibility = "hidden";
+      }
+    };
+    function imgLoad(img, callback) {
+      var timer = setInterval(function () {
+        if (img.complete) {
+          callback();
+          clearInterval(timer);
+        }
+      }, 50);
+    }
+</script>
+</body>
+</html>
