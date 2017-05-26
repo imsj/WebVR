@@ -76,12 +76,9 @@
     var assets = document.querySelector('a-assets');
     var sky = document.querySelector('a-sky');
     var button = document.querySelector('button');
-
     button.onclick = function () {
-      imgLoad(img1, function () {
-        tip.style.display = 'none';
-        scene.style.visibility = "visible";
-      });
+      tip.style.display = 'none';
+      scene.style.visibility = "visible";
     };
     document.onkeydown = function (e) {
       if (e && e.keyCode === 13) {
@@ -96,14 +93,14 @@
         scene.style.visibility = "hidden";
       }
     };
-    function imgLoad(img, callback) {
-      var timer = setInterval(function () {
-        if (img.complete) {
-          callback();
-          clearInterval(timer);
-        }
-      }, 50);
-    }
+    //    function imgLoad(img, callback) {
+    //      var timer = setInterval(function () {
+    //        if (img.complete) {
+    //          callback();
+    //          clearInterval(timer);
+    //        }
+    //      }, 50);
+    //    }
 </script>
 </body>
 </html>
